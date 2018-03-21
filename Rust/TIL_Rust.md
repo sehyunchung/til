@@ -13,7 +13,7 @@ fn main() {
 ```
 $ rustc hello.rs
 ```
-컴파일에 성공하면 바이너리 코드를 생성해주는 것 같은데, 같은 폴더에 `.hello`라는 이름으로 생성되나보다.
+컴파일에 성공하면 바이너리 코드`hello`를 생성해주고, 터미널에서 `./hello`을 입력해서 실행할 수 있다.
 ### `println!`
 js의 `console.log()`와 비슷한 것으로 Rust엔 `println!`이 있다. 차이점은 이걸 [*macro*](https://rustbyexample.com/macros.html)라고 부른다는 점(인 것으로 현 시점에서 추정 됨).
 ```rust
