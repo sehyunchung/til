@@ -6,5 +6,5 @@ ___
 > from "함수형 자바스크립트 프로그래밍", 유인동 지음
   
 3-22-2018:
-> "KeepAJournalToLiveBetter"
+> "KeepAJournalToLiveBetter"  
 > from http://no-smok.net/nsmk/KeepAJournalToLiveBetter
