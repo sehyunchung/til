@@ -100,6 +100,7 @@ const users = [
 
 ```js
 // 1. 30세 이상인 users를 거른다.
+
 const new_list = [];
 for (let i = 0; i < users.length; i++) {
   if (users[i].age >= 30) {
@@ -107,19 +108,25 @@ for (let i = 0; i < users.length; i++) {
   }
 }
 console.log(temp_users);
+
 // 2. 30세 이상인 users의 names를 수집한다.
+
 const names = [];
 for (let i = 0; i < temp_users; i++) {
   names.push(temp_users[i].name);
 }
+
 // 3. 30세 미만인 users를 거른다.
+
 const temp_users = [];
 for (let i = 0; i < users.length; i++) {
   if (users[i].age < 30) {
     temp_users.push(users[i]);
   }
 }
+
 // 4. 30세 미만인 users의 ages를 수집한다.
+
 const ages = [];
 for (let i = 0; i < temp_users.length; i++) {
   ages.push(temp_users[i].age);
@@ -133,6 +140,7 @@ console.log(ages);
 
 ```js
 // 1. 30세 이상인 users를 거른다.
+
 function _filter(users, predi) {
   const new_list = [];
   for (let i = 0; i < users.length; i++) {
@@ -194,12 +202,20 @@ function _map(list, mapper) {
   return new_list;
 }
 
-const over_30 = _filter(users, user => user.age >= 30) // _filter로 30세 이상을 걸러서,
-const names = _map(over_30, user => user.name) // 이름 배열을 얻는다.
+// _filter로 30세 이상을 걸러서,
+
+const over_30 = _filter(users, user => user.age >= 30)
+
+// 이름 배열을 얻을 수 있다.
+
+const names = _map(over_30, user => user.name)
+
 // 근데 이렇게 하는 건 함수형의 방식이 아니고, 아래와 같이👇
+
 _map(
   _filter(users, user => user.age >= 30),
   user => user.name
 )
+
 // 이렇게 대입을 줄이고 함수를 중첩시키는 것이 훵셔널✨의 방식이다
 ```
