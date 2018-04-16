@@ -220,3 +220,52 @@ _map(
 
 // 👆이렇게 대입을 줄이고 함수를 중첩시키는 것이 훵셔널✨의 방식이다
 ```
+
+그러나 `_map`과 `_filter`에도 중복이 있고 훵셔널은 용서하지 않는다.
+
+## `each`
+
+`for`문이 하는 일을 젠부 위임 받는 함수
+
+```js
+// 리스트를 한 번 순회하고 반환한다.
+
+function _each(list, iter) {
+  for (let i in list) {
+    iter(list[i]);
+  }
+  return list;
+}
+```
+
+`_each`를 가지고 `_filter`와 `_map`을 리팩토링해보자.
+
+```js
+// _filter
+
+function _filter(list, predi) {
+  const new_list = [];
+  _each(list, function(val) {
+    if (predi(val)) new_list.push(val);
+  });
+  return new_list;
+}
+
+// 더 줄이면ㅋ👇
+
+function _filter(list, predi) {
+  const new_list = [];
+  _each(list, val => predi(val) && new_list.push(val));
+  return new_list;
+}
+
+// _map은 아래와 같이 된다.
+
+function _map(list, mapper) {
+  const new_list = [];
+  _each(list, val => new_list.push(mapper(val)));
+  return new_list;
+}
+```
+
+😍😍😍😍😍
