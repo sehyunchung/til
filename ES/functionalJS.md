@@ -62,7 +62,7 @@ function add4(obj, b) {
 }
 ```
 
-일단 반환하는 값도 없고, 오브젝트의 값을 변경시키는 부수효과를 일으켰으므로 역시 순수함수가 아니다.
+일단 반환하는 값도 없고, 오브젝트의 값을 변경시키는 부수효과를 일으키므로 역시 순수함수가 아니다.
 
 이에 반해 오브젝트를 다루는 순수함수를 생각해보면,
 
@@ -268,4 +268,152 @@ function _map(list, mapper) {
 }
 ```
 
-😍😍😍😍😍
+아름답네...
+
+## 커링, `curry`, `curryr`
+
+인자를 하나씩 채워나가면서 필요한 인자가 모두 채워지면 실행하는 함수를 말한다. JS 에서 기본적으로 지원하진 않지만 아래와 같이 만들 수 있다.
+
+```js
+function _curry(fn) {
+  return function(a) {
+    return function(b) {
+      return fn(a, b);
+    };
+  };
+}
+```
+
+띠용~
+
+아래와 같이 사용할 수 있다.
+
+```js
+// 보통의 add 함수에 _curry를 씌워보면
+
+const add = _curry(function(a, b) {
+  return a + b;
+});
+
+// 10을 더해주는 함수
+
+const add10 = add(10);
+
+// 1 + 2
+
+add(1)(2);
+```
+
+좀 더 대응력 좋게 만들어보자.
+
+```js
+function _curry(fn) {
+  return function(a, b) {
+    return arguments.length == 2 ? // 인자가 두 개 들어왔을 경우 바로 fn(a, b)를 리턴
+      fn(a, b) : function(b) { return fn(a, b)}
+    };
+  };
+}
+```
+
+이렇게 만든 `_curry`로 또 다른 함수를 만들어 보자.
+
+```js
+// 뺄셈 함수
+
+const sub = _curry(function(a, b) {
+  return a - b;
+});
+
+console.log(sub(10, 5)); // 5
+```
+
+첫번째 인자로 10 을 넘겨준 뺄셈 함수를 만들어보자.
+
+```js
+const sub10 = sub(10);
+
+console.log(sub10(5)); // 5
+```
+
+잘 작동하지만 이름이 어색하다. `sub10`이면 10 을 빼는 함수가 되는 것이 더 직관적이다. 이런 경우 인자의 순서를 바꿔주는 `_curryr`함수를 만들어줄 수 있다.
+
+```js
+function _curryr(fn) {
+  return function(a, b) {
+    return arguments.length == 2 ?
+      fn(a, b) : function(b) { return fn(b, a)} // 인자의 순서를 바꿔준다
+    };
+  };
+}
+```
+
+처음 보면 뭐 이런.. 이라고 생각할 수 있지만 함수형 프로그래밍의 세계에선 흔하게 쓰이는 방식이다.
+
+위의 뺄셈 함수를 다시 작성해보면,
+
+```js
+const sub = _curryr(function(a, b) {
+  return a - b;
+});
+
+console.log(sub(10, 5)); // 5
+
+const sub10 = sub(10);
+
+console.log(sub10(5)); // -5
+```
+
+인자 두 개를 넣어도 하나만 넣어도 어색하지 않게 작동하는 함수가 되었다.
+
+### `get`
+
+안전하게 가져올 수 있게 해주는 함수. 아래와 같이 만들 수 있다.
+
+```js
+function _get(obj, key) {
+  return obj == null ? undefined : obj[key];
+}
+```
+
+```js
+const user1 = users[0];
+
+console.log(user1.name); // user1의 이름을 가져오지만 name 값이 없으면 에러가 발생한다.
+
+// _get을 사용하면,
+
+console.log(_get(user1, 'name')); // name이 있어도 없어도 잘 작동한다.
+```
+
+에러가 발생하지 않아 안전할 뿐 아니라 정돈된 느낌을 준다.
+
+여기서 `_get` 함수를 `_curryr` 함수를 적용해서 다시 만들어보자.
+
+```js
+const _get = _curryr(function(obj, key) {
+  return obj == null ? undefined : obj[key];
+});
+```
+
+이렇게 하면, 인자를 받는 순서를 바꿔주므로, 아래와 같이 간결한 함수를 만들어낼 수 있다.
+
+```js
+console.log(_get('name')(user1)); // name을 가져오는 함수로 먼저 만들 수 있다.
+
+const get_name = _get('name');
+console.log(get_name(user1)); // ID
+```
+
+위에서 특정 조건을 만족하는 user 의 name 값을 가져오는 함수도 아래와 같이 리팩토링 할 수 있다.
+
+```js
+_map(
+  _filter(users, function(user) {
+    return user.age >= 30;
+  }),
+  _get('name')
+);
+```
+
+더욱 간결하고 선언적인 코드가 되었다.
