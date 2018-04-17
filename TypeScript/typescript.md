@@ -70,7 +70,7 @@ myCar = {
 오브젝트의 형태를 매번 지정한다면 너무 귀찮을 것이다. 그래서 타입스크립트는 마치 오브젝트-클래스처럼 형태를 저장할 수 있는 기능을 제공하며, 그것을 `interface`라고 한다.
 
 ```ts
-// 기본적으론 이렇고,
+// 기본적으론 이런 형태이고,
 
 interface Car {
   make: string;
@@ -79,11 +79,13 @@ interface Car {
 }
 
 // 아래와 같이 추가할 수도 있다.
+
 interface Car {
   color: string;
 }
 
 // 아래와 같이 사용한다.
+
 let lisasCar: Car = {
   make: 'Ford',
   model: 'Monster Truck',
