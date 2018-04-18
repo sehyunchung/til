@@ -417,3 +417,64 @@ _map(
 ```
 
 더욱 간결하고 선언적인 코드가 되었다.
+
+## reduce
+
+입력받은 배열을 순회하면서 하나의 값으로 만들어 반환하는 함수.
+
+아래와 같이 만들 수 있다.
+
+```js
+function _reduce(list, iter, memo) {
+  _each(list, function(val) {
+    memo = iter(memo, val);
+  });
+  return memo;
+}
+```
+
+memo 인자를 생략했을 경우에도 동작하도록 다시 만들어보면,
+
+```js
+function _reduce(list, iter, memo) {
+  if (arguments.length == 2) {
+    memo = list[0];
+    list = list.slice(1);
+  }
+  _each(list, function(val) {
+    memo = iter(memo, val);
+  });
+  return memo;
+}
+```
+
+그런데 위 코드에서 .slice 는 배열메소드이므로 list 가 배열이 아니라 유사배열일 경우엔 동작하지 않으므로,
+
+```js
+const slice = Array.prototype.slice; // slice를 가져와서,
+
+slice.call(a, n); // call을 사용해서 사용할 수 있다.
+```
+
+위 코드를 이용해서 다시 만들어보면,
+
+```js
+const slice = Array.prototype.slice;
+function _rest(list, num) {
+  // list를 받아서 자르는 함수를 만들어준다.
+  return slice.call(list, num || 1);
+}
+
+function _reduce(list, iter, memo) {
+  if (arguments.length == 2) {
+    memo = list[0];
+    list = _rest(list);
+  }
+  _each(list, function(val) {
+    memo = iter(memo, val);
+  });
+  return memo;
+}
+```
+
+memo 인자를 생략해도 잘 작동한다.
