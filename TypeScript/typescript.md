@@ -1,5 +1,7 @@
 # TypeScript
 
+Frontend Masters 의 TypeScript 코스를 따라가보았다.
+
 ## Type Annotations
 
 변수 선언시 `variable: type` 의 형태로 타입을 지정해준다.
