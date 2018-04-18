@@ -20,6 +20,7 @@ index 가 음수일 경우엔 str.length 를 더한값으로 취급된다. 즉, 
 
 ```js
 'String'.slice(6, 123); // ''
+
 'String'.slice(7, 0); // ''
 ```
 
@@ -27,5 +28,6 @@ index 가 음수일 경우엔 str.length 를 더한값으로 취급된다. 즉, 
 
 ```js
 'String'.slice(0, 6); // 'String'
+
 'String'.slice(0, 9912348); // 'String'
 ```
