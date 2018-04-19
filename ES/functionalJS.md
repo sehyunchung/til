@@ -453,7 +453,7 @@ function _reduce(list, iter, memo) {
 ```js
 const slice = Array.prototype.slice; // slice를 가져와서,
 
-slice.call(a, n); // call을 사용해서 사용할 수 있다.
+slice.call(a, n); // call을 이용해서 호출한다.
 ```
 
 위 코드를 이용해서 다시 만들어보면,
@@ -477,4 +477,107 @@ function _reduce(list, iter, memo) {
 }
 ```
 
-memo 인자를 생략해도 잘 작동한다.
+이제 memo 인자를 생략해도 잘 작동한다.
+
+## 파이프라인, `_go`, `_pipe`, 화살표 함수
+
+### `_pipe`
+
+함수들을 인자로 받아 연속적으로 실행시키는 함수
+
+```js
+function _pipe() {
+  const fns = arguments;
+  return function(arg) {
+    return _reduce(
+      fns,
+      function(arg, fn) {
+        return fn(arg);
+      },
+      arg
+    );
+  };
+}
+
+const f1 = _pipe(
+  function(a) {
+    return a + 1; // 1 + 1
+  },
+  function(a) {
+    return a * 2; // 2 * 2
+  }
+);
+
+f1(1); // 4
+```
+
+### `_go`
+
+`_pipe`의 즉시 실행 버전
+
+```js
+function _go(arg) {
+  const fns = _rest(arguments);
+  return _pipe.apply(null, fns)(arg);
+}
+
+_go(
+  1,
+  function(a) {
+    return a + 1;
+  },
+  function(a) {
+    return a * 2;
+  },
+  function(a) {
+    return a * a;
+  },
+  console.log
+);
+```
+
+그럼 위의 `users`에 `_go`를 적용해보자.
+
+```js
+_map(
+  _filter(users, function(user) {
+    return user.age >= 30;
+  }),
+  _get('name')
+);
+```
+
+함수의 실행순서가 안 &rarr; 밖이어서 직관적이지 않은 점이 있었다. 이것을 `_go`로 개선해보면,
+
+```js
+_go(
+  users,
+  function(users) {
+    return _filter(users, function(user) {
+      return user.age >= 30;
+    });
+  },
+  function(users) {
+    return _map(users, _get('name'));
+  },
+  console.log
+);
+```
+
+위 코드를 `_curryr`을 적용해서 더 간결하게 만들 수 있다.
+
+```js
+const _map = _curryr(_map),
+  _filter = _curryr(_filter);
+
+// 아래와 같이 된다.
+
+_go(
+  users,
+  _filter(function(user) {
+    return user.age >= 30;
+  }),
+  _map(_get('name')),
+  console.log
+);
+```
