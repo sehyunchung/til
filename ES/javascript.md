@@ -61,3 +61,76 @@ index 가 음수일 경우엔 str.length 를 더한값으로 취급된다. 즉, 
 ### Arrow Functions
 
 화살표 함수는 자신의 `this`를 갖지 않고, 사용 방식에 따라 달라지지도 않으며, 선언된 스코프의 `this`를 가리킨다.
+
+## `null`과 `undefined`
+
+`null`과 `undefined`는 비슷해 보이지만 다른 의미를 갖는다.
+
+* 초기화 되지 않은 무엇: `undefined`
+* 아무 것도 없는 것: `null`
+
+```js
+let a;
+console.log(a); // undefined
+
+let b = null;
+console.log(b); // null
+```
+
+`typeof undefined`는 `undefined` 지만
+`typeof null` 은 `object` 이다.
+
+```js
+typeof null; // "object" ("null" 이 아닌 데엔 역사적인 이유가 있다.)
+typeof undefined; // "undefined"
+```
+
+역사적인 이유:
+초기 자바스크립트에서 값은 타입 태그와 값으로 표현되었는데, 오브젝트의 타입 태그가 `0`이었고, `null`은 `NULL` 포인터(즉 `0x00`)였다. 그 결과 null 이 `0`을 타입 태그로 갖게 되었고 그리하여 `typeof null` 이 `object`가 된 것.
+
+EcmaScript 표준에 `typeof null === 'null'`이 제안되기도 했지만 [거절당했다](https://archive.is/sPyGA#selection-101.8-114.0).
+
+```js
+null === undefined; // false
+null == undefined; // true
+null === null; // true
+null == null; // true
+!null; // true
+isNaN(1 + null); // false
+isNaN(1 + undefined); // true
+```
+
+```js
+console.log(undefined == undefined); // true
+console.log(null == undefined); // true
+
+console.log(0 == undefined); // false
+console.log('' == undefined); // false
+console.log(false == undefined); // false
+```
+
+`null`이나 `undefined`를 체크할 땐 `== null`을 쓰는 것이 권장된다.
+
+```js
+function foo(arg: string | null | undefined) {
+  if (arg != null) {
+    // ...
+  }
+}
+```
+
+한가지 예외는 루트 레벨에서의 `undefined` 값이다.
+
+### root level undefined
+
+보통의 경우 `== null`을 사용하면 되지만 전역 레벨에선 예외다. 스트릭트 모드라면 Reference Error 를 발생시키기 때문.
+전역 레벨에서 변수의 타입이 어떤지 알아볼 땐 `typeof`를 사용하도록 한다.
+
+```js
+if (typeof someglobal !== 'undefined') {
+  //  someglobal은 안전하게 사용할 수 있다.
+  console.log(someglobal);
+}
+```
+
+더글러스 크록포드 님은 `null`은 배드아이디어이며 우리 모두는 그냥 `undefined`를 써야 한다고 했다 카더라.
