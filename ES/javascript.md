@@ -88,7 +88,7 @@ typeof undefined; // "undefined"
 역사적인 이유:
 초기 자바스크립트에서 값은 타입 태그와 값으로 표현되었는데, 오브젝트의 타입 태그가 `0`이었고, `null`은 `NULL` 포인터(즉 `0x00`)였다. 그 결과 null 이 `0`을 타입 태그로 갖게 되었고 그리하여 `typeof null` 이 `object`가 된 것.
 
-EcmaScript 표준에 `typeof null === 'null'`이 제안되기도 했지만 [거절당했다](https://archive.is/sPyGA#selection-101.8-114.0).
+EcmaScript 표준에 `typeof null === 'null'`이 제안되기도 했지만 [거절당했다](https://archive.is/sPyGA#selection-101.8-114.0)([reference](https://stackoverflow.com/a/18808270/8994411)).
 
 ```js
 null === undefined; // false
