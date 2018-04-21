@@ -31,3 +31,11 @@
 > "저는 **작지만 유용한 프로그램들을 매일 작성**할 것을 추천합니다. 누군가가 똑같거나 혹은 더 나은 걸 이미 만들었다는 데에 절대 신경쓰지 마세요. 유용성과 복잡성 간의 균형 감각을 얻기 위해서는 당신 자신이 만든 프로그램의 유용성을 직접 느껴봐야만 합니다. --워드 커닝햄"
 >
 > <div style="text-align: right">from<a href="http://agile.egloos.com/2807583"> http://agile.egloos.com/2807583</a></div>
+
+### 4-20-2018:
+
+> a) Your code should be efficient. ‘Efficient’ refers to less in code size and faster in execution.  
+> b) Your code should have good readability.  
+> c) Your code should use all the good features of the language
+
+<div style="text-align: right">from<a href="http://guideme.itgo.com/atozofc/ch04.pdf"> A to Z of C</a></div>
