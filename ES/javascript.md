@@ -134,3 +134,6 @@ if (typeof someglobal !== 'undefined') {
 ```
 
 더글러스 크록포드 님은 `null`은 배드아이디어이며 우리 모두는 그냥 `undefined`를 써야 한다고 했다 카더라.
+
+> 한가지 더 알게 된 것:  
+> 콘솔에서 `!!document.all`을 하면 `false`가 튀어나온다는 것이었다..
