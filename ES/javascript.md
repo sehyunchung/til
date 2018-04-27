@@ -151,3 +151,24 @@ if (document.all) {
 
 대부분의 브라우저들이 하위호환 이슈 때문에 쩔 수 없이 `document.all`을 지원하고 있는 관계로 `document.all`이 truthy 이면 아래 코드가 실행되지 않는다는 이슈가 있다고 한다. 물론, `if` 조건과 `else if` 조건의 위치를 바꾸면 해결될 문제이지만 그냥 위의 코드를 쓰고 있는 경우가 많아 falsy 로 해둘 수 밖에 없다고.
 
+## IIFE(Immediately Invoked Function Expressions)
+
+```js
+(function() {})();
+```
+
+즉시 실행 함수 표현식. 선언과 동시에 리턴하게 된다.
+
+기본적으로 위와 같이, 괄호로 둘러싸인 함수 선언식 옆에 `()`를 붙여 선언과 동시에 실행시키는 방식이다. 함수 스코프 안에서 선언된 변수는 바깥에서 접근이 불가능하므로,
+
+```js
+(function() {
+  let foo = bar;
+})();
+
+foo; // "Uncaught Reference Error: foo is nor defined"
+```
+
+> 불가능~
+
+코드 전체를 IIFE 로 둘러싸 전역 변수의 외부 노출을 막는데 주로 사용된다.
