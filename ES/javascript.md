@@ -135,5 +135,19 @@ if (typeof someglobal !== 'undefined') {
 
 더글러스 크록포드 님은 `null`은 배드아이디어이며 우리 모두는 그냥 `undefined`를 써야 한다고 했다 카더라.
 
-> 한가지 더 알게 된 것:  
-> 콘솔에서 `!!document.all`을 하면 `false`가 튀어나온다는 것이었다..
+## 재미있는 점들
+
+위의 얘기를 하다가 한가지 더 알게 됐는데, 콘솔에서 `!!document.all`을 하면 `false`가 튀어나온다는 것이었다. 왜일까 다시 찾아보았더니 이런 답변을 찾을 수 있었다. &rarr; https://stackoverflow.com/a/10394873/8994411
+
+그러니까 `document.all`이 아래와 같이 구버전 브라우저 검사에 사용되어왔고,
+
+```js
+if (document.all) {
+  // 고리짝 브라우저에서 실행
+} else if (document.getElementById) {
+  // "모던" 브라우저에서 실행
+}
+```
+
+대부분의 브라우저들이 하위호환 이슈 때문에 쩔 수 없이 `document.all`을 지원하고 있는 관계로 `document.all`이 truthy 이면 아래 코드가 실행되지 않는다는 이슈가 있다고 한다. 물론, `if` 조건과 `else if` 조건의 위치를 바꾸면 해결될 문제이지만 그냥 위의 코드를 쓰고 있는 경우가 많아 falsy 로 해둘 수 밖에 없다고.
+
