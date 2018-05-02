@@ -14,3 +14,22 @@
 | **Restrictions on form data type** | only ASCII chars | no restrictions |
 
 가장 큰 차이점, 그러니까 위의 차이들을 일으키는 *원인*은 url 을 이용하냐 아니냐에서 온다고 일단 생각할 수 있겠다.
+
+## Cookies vs. sessionStorage vs. localStorage
+
+서버가 사용자의 브라우저를 이용해 필요한 데이터를 사용자의 컴퓨터에 저장하는 방식들이다.
+
+```js
+sessionStorage.setItem('key', 'value');
+localStorage.setItem('key', 'value');
+document.cookie = newCookie;
+```
+
+|                   | Cookies           | Local Storage | Session Storage |
+| ----------------- | ----------------- | ------------- | --------------- |
+| Capacity          | 4kb               | 10mb          | 5mb             |
+| Browsers          | HTML4/5           | HTML5         | HTML5           |
+| Accessible from   | Any window        | Any window    | Same tab        |
+| Expires           | Manually set      | Never         | On tab close    |
+| Storage Location  | Brower and Server | Brower Only   | Browser Only    |
+| Sent with Request | Yes               | No            | No              |
