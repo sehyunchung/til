@@ -44,3 +44,37 @@ var funcExpression = function() {
 ### 선언식의 이점(?)
 
 * 호이스팅이 된다.
+
+## Closure
+
+함수 `fn1` 안에서 선언된 함수 `fn2`가 바깥 함수 fn1 안에서 선언된 변수 `foo` 를 사용하고 있고, `fn1`은 `fn2`를 반환할 때, 얼핏 생각하기와는 다르게 반환된 함수 `fn2`에서 실행이 끝난 `fn1`안의 변수 `foo`에 계속해서 접근할 수 있는데, 이것을 가리켜 클로저라고 한다.
+
+```js
+function fn1() {
+  const foo = 'bar';
+  function fn2() {
+    return foo;
+  }
+  return fn2;
+}
+
+const fn3 = fn1();
+
+fn3(); // 'bar'
+```
+
+대표적인 예시로 makeAdder 함수가 있다.
+
+```js
+function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+const add5 = makeAdder(5);
+const add10 = makeAdder(10);
+
+add5(10); // 15
+add10(10); // 20
+```
