@@ -78,3 +78,9 @@ const add10 = makeAdder(10);
 add5(10); // 15
 add10(10); // 20
 ```
+
+[인사이드 자바스크립트](http://www.hanbit.co.kr/store/books/look.php?p_code=B6479856408)에선 클로저를 다음과 같이 정의한다.
+
+> "이미 생명 주기가 끝난 외부함수의 변수를 참조하는 함수"
+
+정의 존잘이신..
