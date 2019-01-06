@@ -84,3 +84,22 @@ add10(10); // 20
 > "이미 생명 주기가 끝난 외부함수의 변수를 참조하는 함수"
 
 정의 존잘이신..
+
+예제도 주옥같다.
+
+```js
+const getCompletedStr = (function() {
+  const buffAr = ['I am ', '', '. I live in ', '', ". I'm ", '', ' years old.'];
+
+  return function(name, city, age) {
+    buffAr[1] = name;
+    buffAr[3] = city;
+    buffAr[5] = age;
+
+    return buffAr.join('');
+  };
+})();
+
+const str = getCompletedStr('zzoon', 'seoul', 16);
+console.log(str); // 'I am zzoon. I live in seoul. I'm 16 years old.'
+```
