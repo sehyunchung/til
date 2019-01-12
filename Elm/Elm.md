@@ -3,6 +3,17 @@
 Elm 하면서 피똥싼 경험
 
 ---
+## `Browser` module
+Elm 웹앱의 단계적 API. Elm이 컨트롤 할 범위에 따라 달라진다.
+
+- `sandbox` - 연습용
+
+- `element` - Elm이 컨트롤 하는 html element 하나 만들기. 자바스크립트로 만든 앱에 부분적용하기 좋다.
+
+- `document` - `<title>`과 `<body>`를 컨트롤 할 수 있음
+
+- `application` - url 컨트롤이 가능한 SPA
+
 
 ## `0.19` Problems
 
